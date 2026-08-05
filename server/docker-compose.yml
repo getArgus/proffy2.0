@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_USER: proffy
+      POSTGRES_PASSWORD: proffy
+      POSTGRES_DB: proffy
+    ports:
+      - '5432:5432'
+    volumes:
+      - proffy_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U proffy -d proffy']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    depends_on:
+      - db
+    environment:
+      PORT: 3333
+      PG_HOST: db
+      PG_USER: proffy
+      PG_PASSWORD: proffy
+      PG_DATABASE: proffy
+    ports:
+      - '3333:3333'
+    command: sh -c "npm run knex:migrate && npm start"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  proffy_db_data:

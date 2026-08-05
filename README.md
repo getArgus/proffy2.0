@@ -68,7 +68,15 @@ $ git clone https://github.com/rpsfilho93/proffy2.0.git
 ```
 
 ### API
-   A API utiliza uma database Postgres. Você pode utilizar um container [docker](https://docs.docker.com/get-docker/) para hospedar a database Postgres localmente como nesse [tutorial](https://docs.docker.com/engine/examples/postgresql_service/). E em seguida preencher as configurações de autenticação em uma arquivo .env seguindo o modelo do arquivo [.env.example](https://github.com/rpsfilho93/proffy/blob/main/server/.env.example).
+   A API utiliza uma database Postgres. Você pode subir tudo com Docker dentro da pasta [server](server) usando o arquivo [docker-compose.yml](server/docker-compose.yml) ou, se preferir, hospedar o Postgres separadamente com um container [docker](https://docs.docker.com/get-docker/). Em seguida, preencha as configurações de autenticação em um arquivo `.env` seguindo o modelo de [server/.env.example](server/.env.example).
+
+```bash
+# Acessar pasta do servidor
+cd server
+
+# Subir API + banco
+docker compose up --build
+```
    
 ```bash
 # Acessar pasta do servidor
